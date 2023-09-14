@@ -1,0 +1,36 @@
+server:
+  port: 8888
+
+spring:
+  cloud:
+    config:
+      server:
+        native:
+          search-locations: https://github.com/moddevyes/config-repo
+logging:
+  level:
+    root: info
+---
+spring:
+  application:
+    name: commerce-config-server
+  profiles:
+    active: docker
+  cloud:
+    config:
+      server:
+        git:
+          uri: https://github.com/moddevyes/config-repo
+          username: moddevyes
+          password:
+        native:
+          search-locations: https://github.com/moddevyes/config-repo
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/
+  instance:
+    statusPageUrl: https://${eureka.hostname}/info
+    healthCheckUrl: https://${eureka.hostname}/health
+    homePageUrl: https://${eureka.hostname}/
